@@ -4,6 +4,9 @@ const utils = require('./utils')
 const config = require('../config')
 const vueLoaderConfig = require('./vue-loader.conf')
 
+const cesiumSource = '../node_modules/cesium/Source';
+const cesiumWorkers = '../../Build/Cesium/Workers';
+
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
@@ -23,11 +26,15 @@ module.exports = {
       : config.dev.assetsPublicPath,
     sourcePrefix: ' '
   },
+  amd: {
+    toUrlUndefined: true
+  },
   resolve: {
     extensions: ['.js', '.vue', '.json'],
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
       '@': resolve('src'),
+      'cesium': path.resolve(__dirname, cesiumSource)
     }
   },
   module: {

@@ -5,13 +5,8 @@
 </template>
 
 <script>
-import cesiumViewer from "./components/cesiumViewer";
-
 export default {
   name: "App",
-  components: {
-    cesiumViewer: cesiumViewer
-  }
 };
 </script>
 
@@ -26,7 +21,7 @@ export default {
   width: 100%;
 }
 
-html， body， #cesiumContainer {
+html, body, #cesiumContainer {
   width: 100%;
   height: 100%;
   margin: 0;

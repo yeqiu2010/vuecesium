@@ -11,6 +11,9 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
+const cesiumSource = 'node_modules/cesium/Source';
+const cesiumWorkers = '../Build/Cesium/Workers';
+
 const env = process.env.NODE_ENV === 'testing'
   ? require('../config/test.env')
   : require('../config/prod.env')
@@ -32,7 +35,8 @@ const webpackConfig = merge(baseWebpackConfig, {
   plugins: [
     // http://vuejs.github.io/vue-loader/en/workflow/production.html
     new webpack.DefinePlugin({
-      'process.env': env
+      'process.env': env,
+      CESIUM_BASE_URL: JSON.stringify('')
     }),
     new UglifyJsPlugin({
       uglifyOptions: {
@@ -119,6 +123,15 @@ const webpackConfig = merge(baseWebpackConfig, {
         to: config.build.assetsSubDirectory,
         ignore: ['.*']
       }
+    ]),
+    new CopyWebpackPlugin([
+      { from: path.join(cesiumSource, cesiumWorkers), to: 'Workers' }
+    ]),
+    new CopyWebpackPlugin([
+      { from: path.join(cesiumSource, 'Assets'), to: 'Assets' }
+    ]),
+    new CopyWebpackPlugin([
+      { from: path.join(cesiumSource, 'Widgets'), to: 'Widgets' }
     ])
   ]
 })
